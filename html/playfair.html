@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Playfair Cipher - Cyber Ciphers Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #e3f0ff;
+      color: #1c3c72;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 15px 50px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 900px;
+      background: linear-gradient(135deg, #1c3c72, #3a6ea5);
+      border-radius: 0 0 60px 60px;
+      box-shadow: 0 6px 20px rgba(29, 59, 105, 0.7);
+      text-align: center;
+      padding: 40px 20px 30px;
+      position: relative;
+      color: #e0e9ff;
+      font-weight: 600;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      font-family: 'Dancing Script', cursive;
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px #aacfff;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-top: 5px;
+      font-style: italic;
+      text-shadow: 0 0 8px #8cb5f5;
+    }
+
+    header img {
+      margin-top: 25px;
+      max-width: 100%;
+      max-height: 180px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    nav {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 25px;
+      margin-bottom: 40px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 12px;
+      background: #d1e6ffcc;
+      border-radius: 40px;
+      box-shadow: 0 0 15px #a2c9ffb4;
+      backdrop-filter: blur(10px);
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #154a8a;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 10px 22px;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background-color: #8cb5f5;
+      color: #0d2a55;
+      box-shadow: 0 0 10px #8cb5f5cc;
+    }
+
+    main {
+      width: 100%;
+      max-width: 600px;
+      background: #ffffff;
+      padding: 30px 25px;
+      border-radius: 30px;
+      box-shadow: 0 6px 16px #a0bfffc0;
+    }
+
+    main h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 25px;
+      letter-spacing: 1.2px;
+      color: #154a8a;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      color: #1c3c72;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      border: 1.8px solid #9dbff9;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #3a6ea5;
+      box-shadow: 0 0 8px #3a6ea5aa;
+    }
+
+    button {
+      background-color: #3a6ea5;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      margin: 10px;
+      border-radius: 18px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 5px 15px #3a6ea5cc;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2a4a70;
+      box-shadow: 0 7px 20px #2a4a70cc;
+    }
+
+    #output {
+      background: #d5e6ff;
+      color: #154a8a;
+      font-weight: 600;
+      font-family: monospace;
+    }
+
+    footer {
+      width: 100%;
+      max-width: 900px;
+      padding: 20px 15px;
+      background-color: #1c3c72;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      flex-shrink: 0;
+      color: #a8bde7;
+      font-weight: 400;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      border-radius: 0 0 40px 40px;
+      margin-top: 60px;
+    }
+
+    footer p + p {
+      margin-top: 8px;
+      font-weight: 600;
+      color: #c7d2fe;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.3rem;
+      }
+      nav ul {
+        gap: 15px;
+      }
+      main {
+        padding: 20px 15px;
+      }
+      button {
+        width: 48%;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Cyber Ciphers Project</h1>
+    <p>Playfair Cipher Simulator</p>
+    <img src="https://cdn-icons-png.flaticon.com/512/3514/3514626.png" alt="Playfair Cipher Illustration" />
+  </header>
+
+  <nav>
+    <ul>
+      <a href="../index.html">Home</a>
+      <a href="../html/playfair.html">Playfair</a>
+      <a href="../html/railfence.html">Rail Fence</a>
+      <a href="../html/vernam.html">Vernam</a>
+      <a href="../html/aes.html">AES</a>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Playfair Cipher Tool</h2>
+
+    <label for="key">Key (Password):</label>
+    <input type="text" id="key" placeholder="Enter key" />
+
+    <label for="input">Input Text (Name or Message):</label>
+    <textarea id="input" rows="5" placeholder="Enter text to encrypt or decrypt"></textarea>
+
+    <div style="text-align:center;">
+      <button onclick="encrypt()">Encrypt</button>
+      <button onclick="decrypt()">Decrypt</button>
+    </div>
+
+    <label for="output">Output:</label>
+    <textarea id="output" rows="5" readonly></textarea>
+  </main>
+
+  <footer>
+    <p>© 2025 Playfair Cipher Project — Developed with 💙 by Your Friendly Coder</p>
+    <p><strong>Team Members:</strong> Safa (ID: 2122020037), Juhee (ID: 2122020016), Saima (ID: 2122020039)</p>
+  </footer>
+
+  <script>
+    const alphabet = 'ABCDEFGHIKLMNOPQRSTUVWXYZ';
+
+    function generateMatrix(key) {
+      key = key.toUpperCase().replace(/J/g, 'I').replace(/[^A-Z]/g, '');
+      let seen = new Set();
+      let matrix = [];
+
+      for (let ch of key + alphabet) {
+        if (!seen.has(ch) && alphabet.includes(ch)) {
+          seen.add(ch);
+        }
+      }
+
+      let arr = Array.from(seen);
+      for (let i = 0; i < 5; i++) {
+        matrix.push(arr.slice(i * 5, i * 5 + 5));
+      }
+      return matrix;
+    }
+
+    function prepareText(text, forEncrypt = true) {
+      text = text.toUpperCase().replace(/J/g, 'I').replace(/[^A-Z]/g, '');
+      if (forEncrypt) {
+        let result = '';
+        for (let i = 0; i < text.length; i += 2) {
+          let a = text[i];
+          let b = text[i + 1];
+          if (!b || a === b) {
+            result += a + 'X';
+            if (a === b) i--;
+          } else {
+            result += a + b;
+          }
+        }
+        if (result.length % 2 !== 0) result += 'X';
+        return result;
+      } else {
+        return text;
+      }
+    }
+
+    function findPosition(matrix, letter) {
+      for (let r = 0; r < 5; r++) {
+        for (let c = 0; c < 5; c++) {
+          if (matrix[r][c] === letter) return [r, c];
+        }
+      }
+      return null;
+    }
+
+    function encryptPair(matrix, a, b) {
+      let [r1, c1] = findPosition(matrix, a);
+      let [r2, c2] = findPosition(matrix, b);
+      if (r1 === r2) {
+        return matrix[r1][(c1 + 1) % 5] + matrix[r2][(c2 + 1) % 5];
+      } else if (c1 === c2) {
+        return matrix[(r1 + 1) % 5][c1] + matrix[(r2 + 1) % 5][c2];
+      } else {
+        return matrix[r1][c2] + matrix[r2][c1];
+      }
+    }
+
+    function decryptPair(matrix, a, b) {
+      let [r1, c1] = findPosition(matrix, a);
+      let [r2, c2] = findPosition(matrix, b);
+      if (r1 === r2) {
+        return matrix[r1][(c1 + 4) % 5] + matrix[r2][(c2 + 4) % 5];
+      } else if (c1 === c2) {
+        return matrix[(r1 + 4) % 5][c1] + matrix[(r2 + 4) % 5][c2];
+      } else {
+        return matrix[r1][c2] + matrix[r2][c1];
+      }
+    }
+
+    function encrypt() {
+      const key = document.getElementById('key').value;
+      const input = document.getElementById('input').value;
+      if (!key || !input) {
+        alert('Please enter both key and input text.');
+        return;
+      }
+      const matrix = generateMatrix(key);
+      const text = prepareText(input, true);
+
+      let encrypted = '';
+      for (let i = 0; i < text.length; i += 2) {
+        encrypted += encryptPair(matrix, text[i], text[i + 1]);
+      }
+
+      document.getElementById('output').value = encrypted;
+    }
+
+    function decrypt() {
+      const key = document.getElementById('key').value;
+      const input = document.getElementById('input').value;
+      if (!key || !input) {
+        alert('Please enter both key and input text.');
+        return;
+      }
+      const matrix = generateMatrix(key);
+      const text = prepareText(input, false);
+
+      let decrypted = '';
+      for (let i = 0; i < text.length; i += 2) {
+        decrypted += decryptPair(matrix, text[i], text[i + 1]);
+      }
+
+      // Clean padded X between identical letters and at the end
+      decrypted = decrypted.replace(/([A-Z])X\1/g, '$1$1');
+      decrypted = decrypted.replace(/X+$/g, '');
+
+      document.getElementById('output').value = decrypted;
+    }
+  </script>
+
+</body>
+</html>
